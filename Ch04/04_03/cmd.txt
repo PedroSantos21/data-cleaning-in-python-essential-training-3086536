@@ -1,0 +1,17 @@
+$ cd Ch04/04_03/
+$ invoke --list
+Available tasks:
+
+  etl
+
+$ invoke etl --csv-file rides.csv 
+$ sqlite3 rides.db 
+SQLite version 3.34.1 2021-01-20 14:10:07
+Enter ".help" for usage hints.
+sqlite> .schema
+CREATE TABLE IF NOT EXISTS "rides" (
+"car" TEXT,
+  "start" TIMESTAMP,
+  "end" TIMESTAMP,
+  "charge" REAL
+);

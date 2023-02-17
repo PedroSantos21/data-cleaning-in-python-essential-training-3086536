@@ -1,0 +1,6 @@
+$ cd Ch04/04_04/
+$ sqlite3 ships.db 
+SQLite version 3.34.1 2021-01-20 14:10:07
+Enter ".help" for usage hints.
+sqlite> SELECT * FROM ships;
+sqlite> 

@@ -35,7 +35,7 @@ def is_valid_row(row):
     now = pd.Timestamp.now()
     if row['time'] > now:
         return False
-    
+
     # path can't be empty
     if pd.isnull(row['path']) or not row['path'].strip():
         return False
@@ -66,6 +66,7 @@ def etl(csv_file, db_file):
         conn.execute('BEGIN')
         with conn:
             df.to_sql('traffic', conn, if_exists='append', index=False)
+
 
 if __name__ == '__main__':
     etl('traffic.csv', 'traffic.db')
