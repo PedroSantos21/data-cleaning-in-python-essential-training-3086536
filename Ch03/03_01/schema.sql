@@ -1,5 +1,5 @@
 CREATE TABLE ships (
     name TEXT,
-    lat FLOAT,
-    lng FLOAT
+    lat FLOAT NOT NULL,
+    lng FLOAT NOT NULL
 );
