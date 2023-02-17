@@ -60,15 +60,16 @@ def load_csv(path, date_cols=[]):
     return df
 
 
-def db_conn(dataframe: pd.DataFrame, db='table'):
+def db_conn(dataframe, db='table'):
+    df = dataframe
     db_name = db+'.db'
     with closing(sql.connect(db_name)) as conn:
         conn.execute('BEGIN')
         with conn:
-            dataframe.to_sql(db, conn, index=False, if_exists=True)
+            df.to_sql(db, conn, index=False, if_exists=True)
 
 
-# @task
+@task
 def etl(csv_file):
     # load_csv(csv_file, date_cols=['time'])
     df = pd.read_csv(csv_file, parse_dates=['time'])
@@ -84,12 +85,16 @@ def etl(csv_file):
         # Fail the ETL if there are more than 5% bad rows
         if percent_invalid >= THRESHOLD_INVALID:
             raise ValueError(
-                f'ETL Failed: Percentage of invalid date superior to {str(THRESHOLD_INVALID)}%')
+                'ETL Failed: Percentage of invalid date superior to 5%')
 
-    db_conn(valid_df, 'trafic')
+    # db_conn(valid_df, 'trafic')
+    with closing(sql.connect('trafic.db')) as conn:
+        conn.execute('BEGIN')
+        with conn:
+            valid_df.to_sql('traffic', conn, if_exists='append', index=False)
 
 
 if __name__ == '__main__':
-    etl('Ch04/challenge/traffic.csv')
+    etl('traffic.csv')
 
 # %%

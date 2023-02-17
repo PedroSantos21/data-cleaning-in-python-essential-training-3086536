@@ -54,3 +54,4 @@ df
 df = df[['start', 'end', 'Name', 'topic', 'earnings']]
 df.rename(columns={'Name': 'name'}, inplace=True)
 df
+# %%
